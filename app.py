@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# 1. 페이지 설정 (반드시 최상단 배치)
+# 1. 페이지 설정 (반드시 파이썬 스크립트 최상단에 배치)
 st.set_page_config(
     page_title="금융 IT 전문 PM · PMO | 박성진 포트폴리오", 
     page_icon="💼", 
@@ -9,8 +9,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. 컴파일러 오작동을 완전히 차단하기 위해 함수 내부 변수로 밀어넣은 Raw 데이터
-def get_raw_data():
+# 2. 컴파일러가 CSS/HTML 파싱을 시도하지 못하도록 함수 내부에 안전하게 데이터 격리
+def get_portfolio_data():
+    # 데이터를 탭(Tab)으로 구분된 안전한 텍스트로 보관
     return """2024.08 ~ 2025.09	신한DS	스윙 (신한금융그룹 그룹웨어) 유지보수	품질점검, 제3자 테스트	PMO/QA
 2022.12 ~ 2023.06	신한금융지주	ESG Data 플랫폼 구축	PMO (QA, TA)	PMO/QA
 2022.03 ~ 2022.09	신한은행	기업신용정보시스템 업그레이드 개발	PM	PM
@@ -23,8 +24,8 @@ def get_raw_data():
 2007.11 ~ 2009.08	신한은행	부수 업무 유지보수	개발자	개발/운영
 2002.03 ~ 2007.11	제일은행	제일은행 부수 업무 유지보수	개발자	개발/운영"""
 
-def inject_custom_css():
-    # 파이썬 Magic 파서가 단위를 숫자로 파싱하지 못하도록 변수 내에 가두어 둔 순수 CSS
+def inject_styles():
+    # Python 3.14 파서가 숫자를 잘못 해석하지 못하게 완전히 격리된 멀티라인 CSS 문자열
     css_code = """<style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
 html, body, [class*="css"] { font-family: 'Noto Sans KR', sans-serif; }
@@ -34,6 +35,92 @@ html, body, [class*="css"] { font-family: 'Noto Sans KR', sans-serif; }
 .metric-num { font-size: 28px; font-weight: 800; color: #0A192F; }
 .metric-label { font-size: 13px; color: #64748B; margin-top: 3px; }
 .tech-tag { display: inline-block; background-color: #E2E8F0; color: #1E293B; padding: 4px 10px; border-radius: 15px; font-size: 12px; font-weight: 500; margin: 3px; }
+</style>"""
+    st.markdown(css_code, unsafe_allow_html=True)
+
+def main():
+    # CSS 스타일 안전하게 주입
+    inject_styles()
+
+    # 특수문자('·') 및 이모지 에러를 방지하기 위해 유니코드 마스킹 및 HTML 격리 처리
+    profile_html = """<div style="text-align:center;margin-bottom:25px;padding:20px;background-color:#F8FAFC;border-radius:12px;border:1px solid #E2E8F0;">
+    <div style="font-size:55px; line-height:1;">&#128104;&#8205;&#128188;</div>
+    <h2 style="margin:10px 0 5px 0;color:#0A192F;font-weight:700;">박성진 수석</h2>
+    <p style="color:#64748B;font-size:14px;margin-bottom:15px;">금융 IT 수석 컨설턴트 &#183; 특급 기술자 | whitenuclear@gmail.com</p>
+    <div style="max-width:500px;margin:0 auto;text-align:center;">
+    <span class="tech-tag">PM / PMO</span><span class="tech-tag">QA & TA</span><span class="tech-tag">C / Pro*C</span>
+    <span class="tech-tag">Java</span><span class="tech-tag">금융 그룹웨어</span><span class="tech-tag">마케팅 플랫폼</span><span class="tech-tag">펌뱅킹</span>
+    </div></div>"""
+    st.markdown(profile_html, unsafe_allow_html=True)
+
+    # 인트로 배너
+    hero_html = """<div class="hero-section">
+    <span style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F5A623;font-weight:700;">Financial IT Expert Portfolio</span>
+    <h2 style="margin:5px 0 10px 0;font-size:24px;font-weight:800;color:white;line-height:1.3;">금융 시스템의 가치를 만드는 전문가</h2>
+    <p style="font-size:14px;font-weight:300;line-height:1.6;color:#E2E8F0;margin:0;">지난 25년간 제일은행, 신한은행 등 대한민국 금융권의 핵심 인프라를 구축하고 안정적으로 관리해 왔습니다. 대규모 프로젝트의 성공적인 납품을 이끄는 파트너가 되겠습니다.</p>
+    </div>"""
+    st.markdown(hero_html, unsafe_allow_html=True)
+
+    # 대시보드 메트릭 카운터
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown('<div class="metric-card"><div class="metric-num">25Y+</div><div class="metric-label">총 IT 경력</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-card"><div class="metric-num">특급</div><div class="metric-label">SW 기술자 등급</div></div>', unsafe_allow_html=True)
+    with c2:
+        st.markdown('<div class="metric-card"><div class="metric-num">7건</div><div class="metric-label">PM/PL 프로젝트 총괄</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-card"><div class="metric-num">100%</div><div class="metric-label">프로젝트 성공 수행률</div></div>', unsafe_allow_html=True)
+
+    st.markdown("<br><h3 style='color:#0A192F; font-weight: 700;'>💼 프로젝트 수행 이력</h3>", unsafe_allow_html=True)
+
+    # Raw 텍스트를 파이썬 판다스 데이터프레임으로 변환 (딕셔너리 들여쓰기 에러 완벽 예방)
+    raw_text = get_portfolio_data()
+    rows = [line.split('\t') for line in raw_text.strip().split('\n') if line]
+    df = pd.DataFrame(rows, columns=["기간", "발주처", "프로젝트명", "역할", "구분"])
+
+    # UI 필터 컨트롤러
+    ui_col1, ui_col2 = st.columns(2)
+    with ui_col1:
+        role_filter = st.selectbox("업무 구분", ["전체 보기", "PM", "PMO/QA", "개발/운영"])
+    with ui_col2:
+        client_filter = st.selectbox("발주처", ["전체 보기", "신한은행", "신한금융지주", "신한DS", "제일은행"])
+
+    search_query = st.text_input("프로젝트명 직접 검색 🔍", placeholder="검색어를 입력하세요...")
+
+    # 필터링 적용
+    filtered_df = df.copy()
+    if role_filter != "전체 보기":
+        filtered_df = filtered_df[filtered_df["구분"] == role_filter]
+    if client_filter != "전체 보기":
+        filtered_df = filtered_df[filtered_df["발주처"] == client_filter]
+    if search_query:
+        filtered_df = filtered_df[filtered_df["프로젝트명"].str.contains(search_query, case=False)]
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # 필터링된 결과 동적 HTML 출력
+    if not filtered_df.empty:
+        for _, row in filtered_df.iterrows():
+            item_html = f"""<div style="background-color:#FFFFFF;border:1px solid #E2E8F0;padding:12px 15px;border-radius:8px;margin-bottom:10px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748B;margin-bottom:5px;">
+            <span>📅 {row['기간']}</span>
+            <span style="background-color:#E0F2FE;color:#0369A1;padding:2px 6px;border-radius:4px;font-weight:bold;">{row['발주처']}</span>
+            </div>
+            <div style="font-weight:700;font-size:14px;color:#0F172A;margin-bottom:5px;">{row['프로젝트명']}</div>
+            <div style="font-size:13px;color:#475569;"><span style="color:#0A192F;font-weight:500;">담당 역할:</span> {row['역할']}</div>
+            </div>"""
+            st.markdown(item_html, unsafe_allow_html=True)
+    else:
+        st.info("조건에 일치하는 프로젝트가 없습니다.")
+
+    # 푸터
+    footer_html = """<div style="text-align:center;margin-top:40px;padding:20px;background-color:#0A192F;color:#94A3B8;border-radius:10px;">
+    <p style="margin:0;font-size:12px;">본 페이지는 스마트폰 반응형에 최적화되어 제작되었습니다.</p>
+    <p style="margin:5px 0 0 0;font-size:12px;color:#F5A623;font-weight:bold;">© 2026 Park Seong-Jin. All Rights Reserved.</p>
+    </div>"""
+    st.markdown(footer_html, unsafe_allow_html=True)
+
+if __name__ == "__main__":
+    main()
 </style>"""
     st.markdown(css_code, unsafe_allow_html=True)
 

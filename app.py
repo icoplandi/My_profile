@@ -201,7 +201,7 @@ def main():
     # 하단 푸터 영역
     footer_html = """<div style="text-align:center;margin-top:40px;padding:20px;background-color:#0A192F;color:#94A3B8;border-radius:10px;">
     <p style="margin:0;font-size:12px;">본 페이지는 스마트폰 반응형에 최적화되어 제작되었습니다.</p>
-    <p style="margin:5px 0 0 0;font-size:12px;color:#F5A623;font-weight:bold;">© 2026 Park Seong-Jin. All Rights Reserved.</p>
+    <p style="margin:5px 0 0 0;font-size:12px;color:#F5A623;font-weight:bold;">"© 2026 Park Seong-Jin. All Rights Reserved."</p>
     </div>"""
     st.markdown(footer_html, unsafe_allow_html=True)
 

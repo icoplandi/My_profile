@@ -188,7 +188,7 @@ def main():
         for _, row in filtered_df.iterrows():
             item_html = f"""<div style="background-color:#FFFFFF;border:1px solid #E2E8F0;padding:12px 15px;border-radius:8px;margin-bottom:10px;">
             <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748B;margin-bottom:5px;">
-            <span>📅 {row['기간']}</span>
+            <span>"📅" {row['기간']}</span>
             <span style="background-color:#E0F2FE;color:#0369A1;padding:2px 6px;border-radius:4px;font-weight:bold;">{row['발주처']}</span>
             </div>
             <div style="font-weight:700;font-size:14px;color:#0F172A;margin-bottom:5px;">{row['프로젝트명']}</div>

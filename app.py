@@ -132,7 +132,7 @@ def main():
     profile_html = """<div style="text-align:center;margin-bottom:25px;padding:20px;background-color:#F8FAFC;border-radius:12px;border:1px solid #E2E8F0;">
     <div style="font-size:60px; line-height:1;">&#128104;&#8205;&#128188;</div>
     <h2 style="margin:10px 0 5px 0;color:#0A192F;font-weight:700;">박성진 수석</h2>
-    <p style="color:#64748B;font-size:14px;margin-bottom:15px;">금융 IT 수석 컨설턴트 · 특급 기술자 | whitenuclear@gmail.com</p>
+    <p style="color:#64748B;font-size:14px;margin-bottom:15px;">금융 IT 수석 컨설턴트 특급 기술자 | whitenuclear@gmail.com</p>
     <div style="max-width:500px;margin:0 auto;text-align:center;">
     <span class="tech-tag">PM / PMO</span><span class="tech-tag">QA & TA</span><span class="tech-tag">C / Pro*C</span>
     <span class="tech-tag">Java</span><span class="tech-tag">금융 그룹웨어</span><span class="tech-tag">마케팅 플랫폼</span><span class="tech-tag">펌뱅킹</span>
